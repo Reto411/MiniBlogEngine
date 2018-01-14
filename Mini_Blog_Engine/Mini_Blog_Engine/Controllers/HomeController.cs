@@ -29,12 +29,14 @@ namespace Mini_Blog_Engine.Controllers
 
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"D:\\Eigene Dateien\\Schule\\M183_Projekt\\MiniBlogEngine\\mini_blog_engine.mdf\";Integrated Security=True;Connect Timeout=30";
+
             con.Open();
 
             SqlCommand cmd = new SqlCommand();
             SqlDataReader reader;
 
-            cmd.CommandText = "SELECT * FROM [dbo].[User] WHERE Username = '" + username + "' AND Password = '" + password + "'";
+
+            cmd.CommandText = "SELECT * FROM [dbo].[User]";
             cmd.Connection = con;
 
             reader = cmd.ExecuteReader();
@@ -43,51 +45,48 @@ namespace Mini_Blog_Engine.Controllers
             {
                 while (reader.Read())
                 {
-                    Console.WriteLine("{0}\t{1}", reader.GetInt32(0), reader.GetString(1));
+                    // In order to make this code work -> replace all UPPERCASE-Placeholders with the corresponding data!
+
+                    var dbUsername = reader.GetString(4);
+                    var dbPassword = reader.GetString(5);
+
+                    if (username == dbUsername && password == dbPassword)
+                    {
+                        var request = (HttpWebRequest)WebRequest.Create("https://rest.nexmo.com/sms/json");
+
+                        var secret = "TEST";
+
+                        var postData = "api_key=API_KEY";
+                        postData += "&api_secret=API_SECRET";
+                        postData += "&to=MY_PHONENUMBER";
+                        postData += "&from=\"\"NEXMO\"\"";
+                        postData += "&text=\"" + secret + "\"";
+                        var data = Encoding.ASCII.GetBytes(postData);
+
+                        request.Method = "POST";
+                        request.ContentType = "application/x-www-form-urlencoded";
+                        request.ContentLength = data.Length;
+
+                        using (var stream = request.GetRequestStream())
+                        {
+                            stream.Write(data, 0, data.Length);
+                        }
+
+                        var response = (HttpWebResponse)request.GetResponse();
+
+                        var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                        ViewBag.Message = responseString;
+                        return View();
+                    }
                 }
+
+                ViewBag.Message = "Wrong Credentials";
+                
             }
             else
             {
                 Console.WriteLine("NO ROWS FOUND");
-            }
-
-            // In order to make this code work -> replace all UPPERCASE-Placeholders with the corresponding data!
-
-
-
-
-
-            if (username == "test" && password == "test")
-            {
-                var request = (HttpWebRequest)WebRequest.Create("https://rest.nexmo.com/sms/json");
-
-                var secret = "TEST";
-
-                var postData = "api_key=API_KEY";
-                postData += "&api_secret=API_SECRET";
-                postData += "&to=MY_PHONENUMBER";
-                postData += "&from=\"\"NEXMO\"\"";
-                postData += "&text=\"" + secret + "\"";
-                var data = Encoding.ASCII.GetBytes(postData);
-
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = data.Length;
-
-                using (var stream = request.GetRequestStream())
-                {
-                    stream.Write(data, 0, data.Length);
-                }
-
-                var response = (HttpWebResponse)request.GetResponse();
-
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-                ViewBag.Message = responseString;
-            }
-            else
-            {
-                ViewBag.Message = "Wrong Credentials";
             }
 
             return View();
