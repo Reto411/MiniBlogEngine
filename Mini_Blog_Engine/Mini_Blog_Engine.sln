@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mini_Blog_Engine", "Mini_Blog_Engine\Mini_Blog_Engine.csproj", "{A516A2E3-B253-4AA9-843E-5822B07D40D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A516A2E3-B253-4AA9-843E-5822B07D40D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A516A2E3-B253-4AA9-843E-5822B07D40D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A516A2E3-B253-4AA9-843E-5822B07D40D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A516A2E3-B253-4AA9-843E-5822B07D40D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {85D50F24-28BC-43AF-9BB5-4CD2408234E6}
+	EndGlobalSection
+EndGlobal
