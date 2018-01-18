@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : ControlerWithDB
     {
         // GET: Login
         public ActionResult Index()

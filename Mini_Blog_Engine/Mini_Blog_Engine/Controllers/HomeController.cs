@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControlerWithDB
     {
         public ActionResult Index()
         {
@@ -57,7 +57,7 @@ namespace Mini_Blog_Engine.Controllers
 
                         if (current_user_role == "User")
                         {
-                            RedirectToAction()
+                            // RedirectToAction();
                         }
                         else if (current_user_role == "Admin")
                         {
