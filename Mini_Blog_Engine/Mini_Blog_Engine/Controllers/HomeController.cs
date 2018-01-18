@@ -11,6 +11,8 @@ namespace Mini_Blog_Engine.Controllers
     {
         public ActionResult Index()
         {
+
+
             return View();
         }
 
@@ -24,9 +26,6 @@ namespace Mini_Blog_Engine.Controllers
 
         public ActionResult Login()
         {
-            return RedirectToAction("Index", "Login");
-
-            /* Remove this hell
             var username = Request["username"];
             var password = Request["password"];
 
@@ -104,12 +103,28 @@ namespace Mini_Blog_Engine.Controllers
                 Console.WriteLine("NO ROWS FOUND");
             }
 
-            return View(); */
+            return View();
         }
 
+        [HttpPost]
+        public void TokenLogin()
+        {
+            var token = Request["token"];
+
+            if (token == "TEST")
+            {
+                // -> "Token is correct";
+            }
+            else
+            {
+                // -> "Wrong Token";
+            }
+
+        }
 
         public ActionResult Dashboard()
         {
+
             return View();
         }
 
