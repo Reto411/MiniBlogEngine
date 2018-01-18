@@ -3,10 +3,9 @@ using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class ControlerWithDB : Controller
+    public class ControllerWithDB : Controller
     {
         protected DataContext db = new DataContext();
-
 
     }
 }

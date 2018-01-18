@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class LoginController : ControlerWithDB
+    public class LoginController : ControllerWithDB
     {
         // GET: Login
         public ActionResult Index()
@@ -20,6 +20,9 @@ namespace Mini_Blog_Engine.Controllers
 
         public ActionResult Login()
         {
+
+
+
             var username = Request["username"];
             var password = Request["password"];
 

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class HomeController : ControlerWithDB
+    public class HomeController : ControllerWithDB
     {
         public ActionResult Index()
         {

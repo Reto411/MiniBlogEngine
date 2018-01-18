@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class UserController : ControlerWithDB
+    public class UserController : ControllerWithDB
     {
         // GET: User
         public ActionResult Index()
