@@ -1,26 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class HomeController : Controller
+    public class LoginController : Controller
     {
+        // GET: Login
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
 
         public ActionResult Login()
         {
@@ -57,11 +53,11 @@ namespace Mini_Blog_Engine.Controllers
 
                         if (current_user_role == "User")
                         {
-                            RedirectToAction()
+                            RedirectToAction("Index", "User");
                         }
                         else if (current_user_role == "Admin")
                         {
-
+                            RedirectToAction("Index", "Admin");
                         }
 
                         var request = (HttpWebRequest)WebRequest.Create("https://rest.nexmo.com/sms/json");
@@ -94,7 +90,7 @@ namespace Mini_Blog_Engine.Controllers
                 }
 
                 ViewBag.Message = "Wrong Credentials";
-                
+
             }
             else
             {
@@ -118,19 +114,6 @@ namespace Mini_Blog_Engine.Controllers
                 // -> "Wrong Token";
             }
 
-        }
-
-        public ActionResult Dashboard()
-        {
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }
