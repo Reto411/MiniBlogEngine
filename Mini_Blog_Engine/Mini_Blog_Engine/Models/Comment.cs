@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace M183_Blog.Models
+namespace Mini_Blog_Engine.Models
 {
     public class Comment
     {

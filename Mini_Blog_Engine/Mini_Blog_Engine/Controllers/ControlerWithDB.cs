@@ -1,4 +1,4 @@
-﻿using M183_Blog.Models;
+﻿using Mini_Blog_Engine.Models;
 using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace M183_Blog.Models
+namespace Mini_Blog_Engine.Models
 {
     public class Post
     {

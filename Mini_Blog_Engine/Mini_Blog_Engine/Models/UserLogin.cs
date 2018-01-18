@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace M183_Blog.Models
+namespace Mini_Blog_Engine.Models
 {
     public class UserLogin
     {

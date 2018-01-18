@@ -1,22 +1,25 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model Mini_Blog_Engine.ViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Login</h2>
 
-<div class="row" style="margin-top:80px;">
-   
-    <div class="col-lg-8 col-lg-offset-2">
+@using (Html.BeginForm())
+{
+    <legend>Login</legend>
 
-        <label>Token Log In</label>
-
-        <form class="well" action="~/Home/TokenLogin" method="post">
-
-            <label><small>Token</small></label>
-            <input type="text" name="token" value="" class="form-control" />           
-            <br />
-            <input type="submit" name="" value="Verify" class="btn btn-primary">
-
-        </form>        
-
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username)
+        @Html.TextBoxFor(model => model.Username)
     </div>
-</div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password)
+        @Html.TextBoxFor(model => model.Password)
+    </div>
+
+    <input type="submit" value="Login" />
+}

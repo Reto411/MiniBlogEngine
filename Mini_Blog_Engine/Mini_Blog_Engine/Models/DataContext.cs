@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace M183_Blog.Models
+namespace Mini_Blog_Engine.Models
 {
     public class DataContext : DbContext
     {

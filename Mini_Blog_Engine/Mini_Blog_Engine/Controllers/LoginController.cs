@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Web;
+﻿using Mini_Blog_Engine.ViewModels;
 using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
@@ -15,12 +8,13 @@ namespace Mini_Blog_Engine.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            return View("Login", new LoginViewModel());
         }
 
         public ActionResult Login()
         {
-
+            return View("Login", new LoginViewModel());
+            /*
 
 
             var username = Request["username"];
@@ -98,11 +92,11 @@ namespace Mini_Blog_Engine.Controllers
             else
             {
                 Console.WriteLine("NO ROWS FOUND");
-            }
+            }*/
 
             return View();
         }
-
+        /*
         [HttpPost]
         public void TokenLogin()
         {
@@ -117,6 +111,6 @@ namespace Mini_Blog_Engine.Controllers
                 // -> "Wrong Token";
             }
 
-        }
+        }*/
     }
 }
