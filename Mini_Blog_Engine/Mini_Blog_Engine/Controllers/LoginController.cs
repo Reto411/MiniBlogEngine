@@ -29,10 +29,7 @@ namespace Mini_Blog_Engine.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
-            if(ModelState.IsValid)
-            {
-
-            }
+            // if()
             loginViewModel.Password = "";
             return View("Login", loginViewModel);
         }
