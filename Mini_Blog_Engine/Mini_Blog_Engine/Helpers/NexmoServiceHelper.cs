@@ -24,7 +24,7 @@ namespace Mini_Blog_Engine.Helpers
             nexmoPostData += "&api_secret=" + apiSecret;
             nexmoPostData += "&to=" + phonenumber;
             nexmoPostData += "&from=\"\"Blog M183\"\"";
-            nexmoPostData += "&text=\"Hello, your secret number, for login is: " + secretNumber;
+            nexmoPostData += "&text=\"Hello, your secret number, for login is: " + secretNumber + "\n";
 
             var data = Encoding.ASCII.GetBytes(nexmoPostData);
             request.Method = "POST";
@@ -37,7 +37,6 @@ namespace Mini_Blog_Engine.Helpers
             }
 
             var response = (HttpWebResponse)request.GetResponse();
-            // Todo Check Response
         }
 
 

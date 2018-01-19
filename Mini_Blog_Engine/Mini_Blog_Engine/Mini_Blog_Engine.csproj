@@ -173,10 +173,7 @@
     <Compile Include="Repository\PostRepository.cs" />
     <Compile Include="Repository\TokenRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
-<<<<<<< HEAD
-=======
     <Compile Include="ViewModels\PublishedPostListViewModel.cs" />
->>>>>>> 86c48aedc8a87dde0dcd04cf0f81f0bbd275f04c
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PublishedPostListViewModel.cs" />

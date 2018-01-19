@@ -46,7 +46,11 @@ namespace Mini_Blog_Engine.Controllers
                         Token token = tokenRepoitory.CreateToken(user);
                         NexmoServiceHelper.SendTokenSMS(token.TokenNr, user.Mobilephonenumber);
                         ViewBag.LoginStatus = "The One Time Login Token has been sent to your mobile phone.";
-                        TokenViewModel tokenViewModel = new TokenViewModel() { UserId = user.Id };
+                        TokenViewModel tokenViewModel = new TokenViewModel() {
+                            UserId = user.Id,
+                            Password = loginViewModel.Password,
+                            Username = loginViewModel.Username
+                        };
                         return View("LoginToken", tokenViewModel);
                     }
                     else
@@ -72,6 +76,15 @@ namespace Mini_Blog_Engine.Controllers
         [HttpPost]
         public ActionResult LoginToken(TokenViewModel viewModel)
         {
+            if(ModelState.IsValid)
+            {
+                
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Please fill all fields";
+            }
+
             return View("LoginToken");
         }
     }

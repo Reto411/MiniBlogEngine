@@ -8,7 +8,7 @@
 @if (ViewBag.LoginStatus != null)
 {
     <div class="alert alert-info">
-        <strong>ViewBag.LoginStatus</strong>
+        <strong>@ViewBag.LoginStatus</strong>
     </div>
 }
 
@@ -30,6 +30,9 @@
                 @Html.ValidationMessageFor(model => model.Token, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @Html.HiddenFor(model => model.Username)
+        @Html.HiddenFor(model => model.Password)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
