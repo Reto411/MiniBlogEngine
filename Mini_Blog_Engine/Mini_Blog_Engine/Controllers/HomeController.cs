@@ -1,6 +1,8 @@
-﻿using Mini_Blog_Engine.Repository;
+﻿using Mini_Blog_Engine.Models;
+using Mini_Blog_Engine.Repository;
 using Mini_Blog_Engine.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net;
@@ -26,13 +28,13 @@ namespace Mini_Blog_Engine.Controllers
          * 
          */
 
+        PostRepository postRepo = new PostRepository();
 
         public ActionResult Index()
         {
-            PostRepository postRepo = new PostRepository();
-            ListPostViewModel listPostViewModel = new ListPostViewModel(postRepo.getlistPost_ViewModel());
-            
-            return View();
+            List<Post> postList = postRepo.GetPublishedPostList();
+            PublishedPostListViewModel listPostViewModel = new PublishedPostListViewModel(postList);
+            return View(listPostViewModel);
         }
 
         public ActionResult About()

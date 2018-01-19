@@ -5,18 +5,11 @@ using System.Linq;
 
 namespace Mini_Blog_Engine.Repository
 {
-    public class PostRepository
+    public class PostRepository : BaseRepository
     {
-        DataContext db;
-        public List<PostViewModel> getlistPost_ViewModel()
+        public List<Post> GetPublishedPostList()
         {
-            var ListPosts = db.Posts;
-            List<PostViewModel> listPostViewModel = new List<PostViewModel>();
-            foreach (Post post in ListPosts)
-            {
-                listPostViewModel.Add(new PostViewModel(post));
-            }
-            return listPostViewModel;
+            return db.Posts.Where(x => x.Status == PostStatus.Public).ToList();
         }
     }
 }
