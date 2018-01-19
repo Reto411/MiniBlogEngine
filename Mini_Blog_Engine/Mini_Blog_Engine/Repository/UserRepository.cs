@@ -41,13 +41,24 @@ namespace Mini_Blog_Engine.Repository
             {
                 User = user,
                 UserId = user.Id,
-                CreatedOn = DateTime.Now,
                 IP = ip,
                 SessionId = sessionId
             };
+            db.Userlogins.Add(userLogin);
             db.SaveChanges();
 
             return userLogin;
+        }
+
+        public void CleanupSession(int userId, string sessionId, string ip)
+        {
+            var user = db.Users.Find(userId);
+            var session = db.Userlogins.FirstOrDefault(x => x.SessionId == sessionId && x.UserId == userId && x.IP == ip);
+            session.DeletedOn = DateTime.Now;
+
+            var log = new UserLog("Logged Out", user);
+            db.UserLogs.Add(log);
+            db.SaveChanges();
         }
     }
 }

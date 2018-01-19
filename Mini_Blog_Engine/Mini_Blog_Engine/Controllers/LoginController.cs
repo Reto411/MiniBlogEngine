@@ -175,7 +175,12 @@ namespace Mini_Blog_Engine.Controllers
 
         public ActionResult Logout()
         {
-            Session.Abandon();
+            if (Session[ConstHelper.SessionDefaultName] != null)
+            {
+                userRepository.CleanupSession((int)(Session[ConstHelper.SessionDefaultName]), Session.SessionID, Request.UserHostAddress);
+
+                Session.Abandon();
+            }
             return RedirectToAction("Login", "Login");
         }
     }
