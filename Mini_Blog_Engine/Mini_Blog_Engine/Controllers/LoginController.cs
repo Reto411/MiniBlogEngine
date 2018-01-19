@@ -39,39 +39,49 @@ namespace Mini_Blog_Engine.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                User user = userRepository.GetUserByUsername(loginViewModel.Username);
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    if (HashHelper.CompareStringWithHash(loginViewModel.Password, user.Password))
+                    User user = userRepository.GetUserByUsername(loginViewModel.Username);
+                    if (user != null)
                     {
-                        Token token = tokenRepository.CreateToken(user);
-                        NexmoServiceHelper.SendTokenSMS(token.TokenNr, user.Mobilephonenumber);
-                        ViewBag.LoginStatus = "The One Time Login Token has been sent to your mobile phone.";
-                        TokenViewModel tokenViewModel = new TokenViewModel() {
-                            UserId = user.Id,
-                            Password = loginViewModel.Password,
-                            Username = loginViewModel.Username
-                        };
-                        return View("LoginToken", tokenViewModel);
+                        if (HashHelper.CompareStringWithHash(loginViewModel.Password, user.Password))
+                        {
+                            Token token = tokenRepository.CreateToken(user);
+                            NexmoServiceHelper.SendTokenSMS(token.TokenNr, user.Mobilephonenumber);
+                            ViewBag.LoginStatus = "The One Time Login Token has been sent to your mobile phone.";
+                            TokenViewModel tokenViewModel = new TokenViewModel()
+                            {
+                                UserId = user.Id,
+                                Password = loginViewModel.Password,
+                                Username = loginViewModel.Username
+                            };
+                            return View("LoginToken", tokenViewModel);
+                        }
+                        else
+                        {
+                            ViewBag.ErrorMessage = "Logindata Invalid";
+                        }
                     }
                     else
                     {
-                        ViewBag.ErrorMessage = "Logindata Invalid";
+                        loginViewModel.Username = "";
+                        ViewBag.ErrorMessage = "User doesn't exist";
                     }
                 }
                 else
                 {
-                    loginViewModel.Username = "";
-                    ViewBag.ErrorMessage = "User doesn't exist";
+                    ViewBag.ErrorMessage = "Please fill all fields";
                 }
-            } 
-            else
-            {
-                ViewBag.ErrorMessage = "Please fill all fields";
             }
-            
+            catch (Exception ex)
+            {
+                userRepository.AddUserLog(null, "Login Failed with error" + ex.Message);
+                ViewBag.ErrorMessage = "Technical Errors occured";
+                return View();
+            }
+
             loginViewModel.Password = "";
             return View("Login", loginViewModel);
         }
@@ -84,72 +94,83 @@ namespace Mini_Blog_Engine.Controllers
         [HttpPost]
         public ActionResult LoginToken(TokenViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                User user = userRepository.GetUserByUsername(viewModel.Username);
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    if (HashHelper.CompareStringWithHash(viewModel.Password, user.Password))
+                    User user = userRepository.GetUserByUsername(viewModel.Username);
+                    if (user != null)
                     {
-                        var token = tokenRepository.GetTokenValid(viewModel.Token, user.Id);
-                        if (token != null)
+                        if (HashHelper.CompareStringWithHash(viewModel.Password, user.Password))
                         {
-                            try
+                            var token = tokenRepository.GetTokenValid(viewModel.Token, user.Id);
+                            if (token != null)
                             {
-                                // Mark token as deleted
-                                userRepository.AddUserLog(user.Id, "Logged in successful");
-                                token.DeletedOn = DateTime.Now;
-                                db.SaveChanges();
-
-                                // Create Session
-                                Session[ConstHelper.SessionDefaultName] = user.Id;
-                                // Add to db
-                                userRepository.CreateUserLogInForUserId(user.Id, Request.UserHostAddress, Session.SessionID);
-
-                                SessionIDManager sessionIdManager = new SessionIDManager();
-                                string sessionId = sessionIdManager.CreateSessionID(System.Web.HttpContext.Current);
-
-                                // Redirect authenticated user
-
-                                if (user.Role == ((int)(UserRole.Admin)).ToString())
+                                try
                                 {
-                                    return RedirectToAction("Dashboard", "Admin");
+                                    // Mark token as deleted
+                                    userRepository.AddUserLog(user.Id, "Logged in successful");
+                                    token.DeletedOn = DateTime.Now;
+                                    db.SaveChanges();
+
+                                    // Create Session
+                                    Session[ConstHelper.SessionDefaultName] = user.Id;
+                                    // Add to db
+                                    userRepository.CreateUserLogInForUserId(user.Id, Request.UserHostAddress, Session.SessionID);
+
+                                    SessionIDManager sessionIdManager = new SessionIDManager();
+                                    string sessionId = sessionIdManager.CreateSessionID(System.Web.HttpContext.Current);
+
+                                    // Redirect authenticated user
+
+                                    if (user.Role == ((int)(UserRole.Admin)).ToString())
+                                    {
+                                        return RedirectToAction("Dashboard", "Admin");
+                                    }
+                                    if (user.Role == ((int)(UserRole.User)).ToString())
+                                    {
+                                        return RedirectToAction("Dashboard", "User");
+                                    }
                                 }
-                                if (user.Role == ((int)(UserRole.User)).ToString())
+                                catch (Exception ex)
                                 {
-                                    return RedirectToAction("Dashboard", "User");
+                                    userRepository.AddUserLog(user.Id, "Login Failed with error" + ex.Message);
+                                    ViewBag.ErrorMessage = "Technical Errors occured";
+                                    return View();
                                 }
                             }
-                            catch(Exception ex)
+                            else
                             {
-                                userRepository.AddUserLog(user.Id, "Login Failed with error" + ex.Message);
+                                ViewBag.ErrorMessage = "Token invalid, Try again!";
+                                return View("LoginToken", viewModel);
                             }
                         }
                         else
                         {
-                            ViewBag.ErrorMessage = "Token invalid, Try again!";
-                            return View("LoginToken", viewModel);
+                            ViewBag.ErrorMessage = "Pssword invalid";
+                            return RedirectToAction("Login");
                         }
                     }
                     else
                     {
-                        ViewBag.ErrorMessage = "Pssword invalid";
+                        viewModel.Username = "";
+                        ViewBag.ErrorMessage = "User doesn't exist";
                         return RedirectToAction("Login");
                     }
                 }
                 else
                 {
-                    viewModel.Username = "";
-                    ViewBag.ErrorMessage = "User doesn't exist";
+                    ViewBag.ErrorMessage = "Please fill all fields";
                     return RedirectToAction("Login");
                 }
+                return View("LoginToken", viewModel);
             }
-            else
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Please fill all fields";
-                return RedirectToAction("Login");
+                userRepository.AddUserLog(null, "Login Failed with error" + ex.Message);
+                ViewBag.ErrorMessage = "Technical Errors occured";
+                return View();
             }
-            return View("LoginToken", viewModel);
         }
 
         public ActionResult Logout()

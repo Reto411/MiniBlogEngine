@@ -26,7 +26,7 @@ namespace Mini_Blog_Engine.Repository
             db.SaveChanges();
         }
 
-        public void AddUserLog(int userId, string action)
+        public void AddUserLog(int? userId, string action)
         {
             var user = db.Users.Find(userId);
             var userLog = new UserLog(action, user);
