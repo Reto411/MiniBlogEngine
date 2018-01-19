@@ -38,16 +38,16 @@ namespace Mini_Blog_Engine.Controllers
 
         public ActionResult Index()
         {
-            db.Seed();
             List<Post> postList = postRepo.GetPublishedPostList();
             PublishedPostListViewModel listPostViewModel = new PublishedPostListViewModel(postList);
             return View(listPostViewModel);
         }
 
-        public ActionResult Detail()
+        [HttpGet]
+        public ActionResult Detail(PostViewModel ppost)
         {
 
-            return View();
+            return View(ppost);
         }
 
         public ActionResult About()

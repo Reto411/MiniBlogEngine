@@ -1,5 +1,5 @@
 ﻿
-@model Mini_Blog_Engine.ViewModels.PublishedPostListViewModel
+@model  Mini_Blog_Engine.ViewModels.PublishedPostListViewModel
 
 @{
 
@@ -12,12 +12,12 @@
     <div>
         @foreach (var post in Model.ListPost)
         {
-           <div class="card">
-                <h2>@post.Title</h2>
-                <h5>@post.Description</h5>
-                <button onclick="URL." >Detail Ansicht</>
-                <p>@post.Content</p>
-            </div>
+        <div class="card">
+            <h2>@post.Title</h2>
+            <h5>@post.Description</h5>
+            @Html.ActionLink("Detail Ansicht", "Detail", new { ppost = post})
+            <p>@post.Content</p>
+        </div>
         }
     </div>
 </div>
