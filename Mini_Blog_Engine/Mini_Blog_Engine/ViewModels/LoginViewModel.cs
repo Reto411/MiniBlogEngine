@@ -1,4 +1,6 @@
-﻿namespace Mini_Blog_Engine.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Mini_Blog_Engine.ViewModels
 {
     public class LoginViewModel
     {
@@ -7,9 +9,10 @@
 
         }
 
+        [Required]
         public string Username { get; set; }
 
-        // TODO Encrypt
+        [Required]
         public string Password { get; set; }
     }
 }
