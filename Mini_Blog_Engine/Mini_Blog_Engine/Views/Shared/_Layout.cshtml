@@ -25,6 +25,11 @@
                     <li>@Html.ActionLink("Login", "Index", "Login")</li>
                     <li>@Html.ActionLink("Info", "About", "Home")</li>
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+
+                    @if(Session["Pornhub"] != null)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
+                    }
                 </ul>
             </div>
         </div>

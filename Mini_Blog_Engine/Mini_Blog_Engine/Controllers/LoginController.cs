@@ -4,6 +4,7 @@ using Mini_Blog_Engine.Repository;
 using Mini_Blog_Engine.ViewModels;
 using System;
 using System.Runtime.Remoting.Contexts;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.SessionState;
 
@@ -83,26 +84,46 @@ namespace Mini_Blog_Engine.Controllers
         [HttpPost]
         public ActionResult LoginToken(TokenViewModel viewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 User user = userRepository.GetUserByUsername(viewModel.Username);
                 if (user != null)
                 {
                     if (HashHelper.CompareStringWithHash(viewModel.Password, user.Password))
                     {
-                        var token = tokenRepository.GetTokenValid(viewModel.Token, viewModel.UserId);
+                        var token = tokenRepository.GetTokenValid(viewModel.Token, user.Id);
                         if (token != null)
                         {
-                            // Mark token as deleted
-                            userRepository.AddUserLog(user.Id, "Logged in successful");
-                            token.DeletedOn = DateTime.Now;
-                            db.SaveChanges();
+                            try
+                            {
+                                // Mark token as deleted
+                                userRepository.AddUserLog(user.Id, "Logged in successful");
+                                token.DeletedOn = DateTime.Now;
+                                db.SaveChanges();
 
-                            // Create Session
-                            SessionIDManager sessionIdManager = new SessionIDManager();
-                            string sessionId = sessionIdManager.CreateSessionID(System.Web.HttpContext.Current);
-                            userRepository.CreateUserLogForUserId(user.Id, Request.UserHostAddress, sessionId);
-                            
+                                // Create Session
+                                Session[ConstHelper.SessionDefaultName] = user.Id;
+                                // Add to db
+                                userRepository.CreateUserLogInForUserId(user.Id, Request.UserHostAddress, Session.SessionID);
+
+                                SessionIDManager sessionIdManager = new SessionIDManager();
+                                string sessionId = sessionIdManager.CreateSessionID(System.Web.HttpContext.Current);
+
+                                // Redirect authenticated user
+
+                                if (user.Role == ((int)(UserRole.Admin)).ToString())
+                                {
+                                    RedirectToAction("Index", "Admin");
+                                }
+                                if (user.Role == ((int)(UserRole.User)).ToString())
+                                {
+                                    RedirectToAction("Index", "Home");
+                                }
+                            }
+                            catch(Exception ex)
+                            {
+                                userRepository.AddUserLog(user.Id, "Login Failed with error" + ex.Message);
+                            }
                         }
                         else
                         {
@@ -128,8 +149,13 @@ namespace Mini_Blog_Engine.Controllers
                 ViewBag.ErrorMessage = "Please fill all fields";
                 return RedirectToAction("Login");
             }
-
             return View("LoginToken", viewModel);
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Login", "Login");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Mini_Blog_Engine.Models
 {
     public enum UserRole
     {
-        Admin,
-        User
+        Admin = 1,
+        User = 2
     }
 }

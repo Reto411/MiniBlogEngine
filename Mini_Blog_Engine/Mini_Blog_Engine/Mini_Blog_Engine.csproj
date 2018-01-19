@@ -157,6 +157,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ConstHelper.cs" />
     <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\NexmoServiceHelper.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -227,6 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Session\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -15,29 +15,30 @@
 
 <h2>Token</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("LoginToken", "Login"))
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>Token Login</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Token, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Token, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Token, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @Html.HiddenFor(model => model.Username)
-        @Html.HiddenFor(model => model.Password)
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-default" />
-            </div>
+<div class="form-horizontal">
+    <h4>Token Login</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Token, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Token, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Token, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    @Html.HiddenFor(model => model.Username)
+    @Html.HiddenFor(model => model.Password)
+    @Html.HiddenFor(model => model.UserId)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Login" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }

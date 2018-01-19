@@ -6,6 +6,7 @@ namespace Mini_Blog_Engine.Repository
 {
     public class UserRepository : BaseRepository
     {
+
         public UserRepository(DataContext db)
                         : base(db)
         {
@@ -17,6 +18,14 @@ namespace Mini_Blog_Engine.Repository
             return db.Users.FirstOrDefault(x => x.Username == username);
         }
 
+        public void AddLogInWrongCredentialsOnUser(int userId)
+        {
+            var user = db.Users.Find(userId);
+            var userLog = new UserLog("Wrong Credentials", user);
+            db.UserLogs.Add(userLog);
+            db.SaveChanges();
+        }
+
         public void AddUserLog(int userId, string action)
         {
             var user = db.Users.Find(userId);
@@ -25,7 +34,7 @@ namespace Mini_Blog_Engine.Repository
             db.SaveChanges();
         }
 
-        public UserLogin CreateUserLogForUserId(int userId, string ip, string sessionId)
+        public UserLogin CreateUserLogInForUserId(int userId, string ip, string sessionId)
         {
             var user = db.Users.Find(userId);
             var userLogin = new UserLogin()
