@@ -7,13 +7,13 @@ using System.Web;
 
 namespace Mini_Blog_Engine.ViewModels
 {
-    public class Post_ViewModel
+    public class PostViewModel
     {
-        public Post_ViewModel()
+        public PostViewModel()
         {
 
         }
-        public Post_ViewModel(Post pPost)
+        public PostViewModel(Post pPost)
         {
             Title = pPost.Title;
             Description = pPost.Description;

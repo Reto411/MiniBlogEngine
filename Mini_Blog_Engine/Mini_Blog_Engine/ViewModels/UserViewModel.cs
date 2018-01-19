@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Mini_Blog_Engine.ViewModels
 {
-    public class User_ViewModel
+    public class UserViewModel
     {
         public string Username { get; set; }
         public string Firstname { get; set; }
