@@ -91,7 +91,7 @@ namespace Mini_Blog_Engine.Controllers
                 {
                     if (HashHelper.CompareStringWithHash(viewModel.Password, user.Password))
                     {
-                        var token = tokenRepository.GetTokenValid(viewModel.Token, viewModel.UserId);
+                        var token = tokenRepository.GetTokenValid(viewModel.Token, user.Id);
                         if (token != null)
                         {
                             try
@@ -102,7 +102,7 @@ namespace Mini_Blog_Engine.Controllers
                                 db.SaveChanges();
 
                                 // Create Session
-                                Session[userRepository.SessionDefaultName] = user.Id;
+                                Session[ConstHelper.SessionDefaultName] = user.Id;
                                 // Add to db
                                 userRepository.CreateUserLogInForUserId(user.Id, Request.UserHostAddress, Session.SessionID);
 
@@ -150,6 +150,12 @@ namespace Mini_Blog_Engine.Controllers
                 return RedirectToAction("Login");
             }
             return View("LoginToken", viewModel);
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Login", "Login");
         }
     }
 }
