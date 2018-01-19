@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="container body-content">
-        @if (ViewBag.ErrorMessage)
+        @if (ViewBag.ErrorMessage != null)
         {
             <div class="alert alert-danger">
                 <strong>@ViewBag.ErrorMessage</strong>

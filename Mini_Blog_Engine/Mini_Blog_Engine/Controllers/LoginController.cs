@@ -14,12 +14,7 @@ namespace Mini_Blog_Engine.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View("Login", new LoginViewModel());
-        }
-
-        private ActionResult View(string v, LoginViewModel loginViewModel)
-        {
-            throw new NotImplementedException();
+            return RedirectToAction("Login");
         }
 
         public ActionResult Login()
@@ -32,27 +27,35 @@ namespace Mini_Blog_Engine.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
-            User user = userRepository.GetUserByUsername(HashHelper.Hash(loginViewModel.Username));
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                if(HashHelper.CompareStringWithHash(loginViewModel.Password, user.Password))
+                User user = userRepository.GetUserByUsername(HashHelper.Hash(loginViewModel.Username));
+                if (user != null)
                 {
-                    Token token = tokenRepoitory.CreateToken(user);
-                    NexmoServiceHelper.SendTokenSMS(token.TokenNr, user.Mobilephonenumber);
-                    ViewBag.LoginStatus = "The One Time Login Token has been sent to your mobile phone.";
-                    TokenViewModel tokenViewModel = new TokenViewModel() { UserId = user.Id };
-                    return View("LoginToken", tokenViewModel);
+                    if (HashHelper.CompareStringWithHash(loginViewModel.Password, user.Password))
+                    {
+                        Token token = tokenRepoitory.CreateToken(user);
+                        NexmoServiceHelper.SendTokenSMS(token.TokenNr, user.Mobilephonenumber);
+                        ViewBag.LoginStatus = "The One Time Login Token has been sent to your mobile phone.";
+                        TokenViewModel tokenViewModel = new TokenViewModel() { UserId = user.Id };
+                        return View("LoginToken", tokenViewModel);
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Logindata Invalid";
+                    }
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Logindata Invalid";
+                    loginViewModel.Username = "";
+                    ViewBag.ErrorMessage = "User doesn't exist";
                 }
-            }
+            } 
             else
             {
-                loginViewModel.Username = "";
-                ViewBag.ErrorMessage = "User doesn't exist";
+                ViewBag.ErrorMessage = "Please fill all fields";
             }
+            
             loginViewModel.Password = "";
             return View("Login", loginViewModel);
         }

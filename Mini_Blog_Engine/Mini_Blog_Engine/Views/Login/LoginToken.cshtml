@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (ViewBag.LoginStatus)
+@if (ViewBag.LoginStatus != null)
 {
     <div class="alert alert-info">
         <strong>ViewBag.LoginStatus</strong>

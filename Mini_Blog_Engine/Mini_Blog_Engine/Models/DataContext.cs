@@ -1,4 +1,4 @@
-﻿using System;
+﻿  using System; 
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -41,7 +41,7 @@ namespace Mini_Blog_Engine.Models
                 Password = HashHelper.Hash("1234"),
                 Firstname = "Reto",
                 Familyname = "Bürgisser",
-                Mobilephonenumber = "041 777 84 23",
+                Mobilephonenumber = "+41 79 705 88 72", 
                 Role = "1",
                 Status = "single"
             };

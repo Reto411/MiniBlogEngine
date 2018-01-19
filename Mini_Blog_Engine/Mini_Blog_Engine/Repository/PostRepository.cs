@@ -11,12 +11,12 @@ namespace Mini_Blog_Engine.Repository
 
         public List<Post_ViewModel> getlistPost_ViewModel()
         {
-            // return db.Posts.Where(p => new Post_ViewModel(p));
-            return 0;
+            //return db.Posts.Where(p => new Post_ViewModel(p));
+
+            return new List<Post_ViewModel>();
 
         }
 
 
     }
-}
 }
