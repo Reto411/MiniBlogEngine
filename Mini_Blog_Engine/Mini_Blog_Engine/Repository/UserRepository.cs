@@ -6,6 +6,12 @@ namespace Mini_Blog_Engine.Repository
 {
     public class UserRepository : BaseRepository
     {
+
+
+        public string SessionDefaultName { get { return sessionDefaultName; } }
+
+        private const string sessionDefaultName = "Pornhub";
+
         public UserRepository(DataContext db)
                         : base(db)
         {
@@ -25,7 +31,7 @@ namespace Mini_Blog_Engine.Repository
             db.SaveChanges();
         }
 
-        public UserLogin CreateUserLogForUserId(int userId, string ip, string sessionId)
+        public UserLogin CreateUserLogInForUserId(int userId, string ip, string sessionId)
         {
             var user = db.Users.Find(userId);
             var userLogin = new UserLogin()
