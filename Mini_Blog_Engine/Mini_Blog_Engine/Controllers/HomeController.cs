@@ -26,11 +26,7 @@ namespace Mini_Blog_Engine.Controllers
          *    Als Schutz kann die Webseite die Ip des Cookies und die Ip der Maschiene vergleichen,
          *    nur wenn die Ip übereinstimmt hat der User Zugriff.
          * 
-         */
-<<<<<<< HEAD
-        
-        PostRepository postRepo = new PostRepository();
-=======
+         */        
         public DataContext db = new DataContext();
 
         private PostRepository postRepo;
@@ -39,8 +35,6 @@ namespace Mini_Blog_Engine.Controllers
         {
             postRepo = new PostRepository(db);
         }
-
->>>>>>> 86c48aedc8a87dde0dcd04cf0f81f0bbd275f04c
 
         public ActionResult Index()
         {
