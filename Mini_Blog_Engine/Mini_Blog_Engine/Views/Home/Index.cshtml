@@ -1,5 +1,5 @@
 ﻿
-@model Mini_Blog_Engine.ViewModels.PublishedPostListViewModel
+@model  Mini_Blog_Engine.ViewModels.PublishedPostListViewModel
 
 @{
 
@@ -15,7 +15,7 @@
         <div class="card">
             <h2>@post.Title</h2>
             <h5>@post.Description</h5>
-            <button onclick="URL." >Detail Ansicht</>
+            <input type="button" onclick="window.location.href('@Url.Action("Detail")')" /> 
             <p>@post.Content</p>
         </div>
         }
