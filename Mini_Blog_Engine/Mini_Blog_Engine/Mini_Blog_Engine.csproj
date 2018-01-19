@@ -158,6 +158,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\Post.cs" />

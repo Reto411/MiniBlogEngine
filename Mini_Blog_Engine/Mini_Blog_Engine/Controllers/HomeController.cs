@@ -11,6 +11,7 @@ namespace Mini_Blog_Engine.Controllers
     {
         public ActionResult Index()
         {
+            db.Seed();
             return View();
         }
 
