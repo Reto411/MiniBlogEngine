@@ -43,11 +43,10 @@ namespace Mini_Blog_Engine.Controllers
             return View(listPostViewModel);
         }
 
-        [HttpGet]
-        public ActionResult Detail(PostViewModel ppost)
+        public ActionResult Detail(PostViewModel post)
         {
 
-            return View(ppost);
+            return View(post);
         }
 
         public ActionResult About()
