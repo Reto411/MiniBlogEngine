@@ -9,9 +9,9 @@ namespace Mini_Blog_Engine.Repository
     public class BaseRepository
     {
         protected DataContext db;
-        protected BaseRepository()
+        protected BaseRepository(DataContext db)
         {
-            this.db = new DataContext();
+            this.db = db;
         }
         private bool disposed = false;
 

@@ -10,7 +10,7 @@ namespace Mini_Blog_Engine.Helpers
     {
         private const int SaltSize = 16;
         private const int HashSize = 20;
-        private const int IterationsCount = 10001;
+        private const int IterationsCount = 10000;
         private const string HashType = "M183Hash";
         private const string HashVersion = "V0.1";
         /// <summary>
@@ -58,7 +58,7 @@ namespace Mini_Blog_Engine.Helpers
             Array.Copy(hashBytes, 0, salt, 0, SaltSize);
 
             //create hash with given salt
-            var pbkdf2 = new Rfc2898DeriveBytes(hashString, salt, iterations);
+            var pbkdf2 = new Rfc2898DeriveBytes(plaintext, salt, iterations);
             byte[] hash = pbkdf2.GetBytes(HashSize);
 
             //get result

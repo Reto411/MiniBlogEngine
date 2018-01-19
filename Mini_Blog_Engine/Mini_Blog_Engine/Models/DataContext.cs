@@ -37,7 +37,7 @@ namespace Mini_Blog_Engine.Models
         {
             User user1 = new User
             {
-                Username = HashHelper.Hash("Reto411"),
+                Username ="Reto411",
                 Password = HashHelper.Hash("1234"),
                 Firstname = "Reto",
                 Familyname = "Bürgisser",
@@ -47,7 +47,7 @@ namespace Mini_Blog_Engine.Models
             };
             User user2 = new User()
             {
-                Username = HashHelper.Hash("Manuel Prieto"),
+                Username = "Manuel Prieto",
                 Password = HashHelper.Hash("1234"),
                 Firstname = "Manuel",
                 Familyname = "Prieto",

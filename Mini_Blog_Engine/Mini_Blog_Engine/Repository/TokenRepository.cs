@@ -8,6 +8,12 @@ namespace Mini_Blog_Engine.Repository
 {
     public class TokenRepository : BaseRepository
     {
+        public TokenRepository(DataContext db)
+            : base(db)
+        {
+
+        }
+
         public Token CreateToken(User user)
         {
             Token token = new Token()
