@@ -38,7 +38,10 @@ namespace Mini_Blog_Engine.Controllers
                 if(HashHelper.CompareStringWithHash(loginViewModel.Password, user.Password))
                 {
                     Token token = tokenRepoitory.CreateToken(user);
-                    
+                    NexmoServiceHelper.SendTokenSMS(token.TokenNr, user.Mobilephonenumber);
+                    ViewBag.LoginStatus = "The One Time Login Token has been sent to your mobile phone.";
+                    TokenViewModel tokenViewModel = new TokenViewModel() { UserId = user.Id };
+                    return View("LoginToken", tokenViewModel);
                 }
                 else
                 {
@@ -52,6 +55,12 @@ namespace Mini_Blog_Engine.Controllers
             }
             loginViewModel.Password = "";
             return View("Login", loginViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult LoginToken(TokenViewModel viewModel)
+        {
+            return View("LoginToken");
         }
     }
 }
