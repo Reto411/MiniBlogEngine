@@ -28,9 +28,9 @@ namespace Mini_Blog_Engine.Repository
             return token;
         }
 
-        public bool TokenValid(int token, int userId)
+        public Token GetTokenValid(int token, int userId)
         {
-            return db.Tokens.FirstOrDefault(t => t.TokenNr == token && t.UserId == userId && t.Expiry > DateTime.Now) != null;
+            return db.Tokens.FirstOrDefault(t => t.TokenNr == token && t.UserId == userId && t.Expiry > DateTime.Now);
         }
     }
 }

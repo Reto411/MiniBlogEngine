@@ -3,7 +3,9 @@ using Mini_Blog_Engine.Models;
 using Mini_Blog_Engine.Repository;
 using Mini_Blog_Engine.ViewModels;
 using System;
+using System.Runtime.Remoting.Contexts;
 using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace Mini_Blog_Engine.Controllers
 {
@@ -12,12 +14,12 @@ namespace Mini_Blog_Engine.Controllers
         public DataContext db = new DataContext();
 
         private UserRepository userRepository;
-        private TokenRepository tokenRepoitory;
+        private TokenRepository tokenRepository;
 
         public LoginController()
         {
             userRepository = new UserRepository(db);
-            tokenRepoitory = new TokenRepository(db);
+            tokenRepository = new TokenRepository(db);
         }
 
         // GET: Login
@@ -43,7 +45,7 @@ namespace Mini_Blog_Engine.Controllers
                 {
                     if (HashHelper.CompareStringWithHash(loginViewModel.Password, user.Password))
                     {
-                        Token token = tokenRepoitory.CreateToken(user);
+                        Token token = tokenRepository.CreateToken(user);
                         NexmoServiceHelper.SendTokenSMS(token.TokenNr, user.Mobilephonenumber);
                         ViewBag.LoginStatus = "The One Time Login Token has been sent to your mobile phone.";
                         TokenViewModel tokenViewModel = new TokenViewModel() {
@@ -73,19 +75,61 @@ namespace Mini_Blog_Engine.Controllers
             return View("Login", loginViewModel);
         }
 
+        /// <summary>
+        /// In der aufgabenstellung wurde explizit verlangt dass  das password und username nochmal geprüft wird.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult LoginToken(TokenViewModel viewModel)
         {
             if(ModelState.IsValid)
             {
-                
+                User user = userRepository.GetUserByUsername(viewModel.Username);
+                if (user != null)
+                {
+                    if (HashHelper.CompareStringWithHash(viewModel.Password, user.Password))
+                    {
+                        var token = tokenRepository.GetTokenValid(viewModel.Token, viewModel.UserId);
+                        if (token != null)
+                        {
+                            // Mark token as deleted
+                            userRepository.AddUserLog(user.Id, "Logged in successful");
+                            token.DeletedOn = DateTime.Now;
+                            db.SaveChanges();
+
+                            // Create Session
+                            SessionIDManager sessionIdManager = new SessionIDManager();
+                            string sessionId = sessionIdManager.CreateSessionID(System.Web.HttpContext.Current);
+                            userRepository.CreateUserLogForUserId(user.Id, Request.UserHostAddress, sessionId);
+                            
+                        }
+                        else
+                        {
+                            ViewBag.ErrorMessage = "Token invalid, Try again!";
+                            return View("LoginToken", viewModel);
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Pssword invalid";
+                        return RedirectToAction("Login");
+                    }
+                }
+                else
+                {
+                    viewModel.Username = "";
+                    ViewBag.ErrorMessage = "User doesn't exist";
+                    return RedirectToAction("Login");
+                }
             }
             else
             {
                 ViewBag.ErrorMessage = "Please fill all fields";
+                return RedirectToAction("Login");
             }
 
-            return View("LoginToken");
+            return View("LoginToken", viewModel);
         }
     }
 }
