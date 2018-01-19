@@ -11,7 +11,6 @@ namespace Mini_Blog_Engine.Controllers
     {
         public ActionResult Index()
         {
-            db.Seed();
             return View();
         }
 
@@ -28,9 +27,9 @@ namespace Mini_Blog_Engine.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-
         public ActionResult Dashboard()
         {
+
             return View();
         }
 
