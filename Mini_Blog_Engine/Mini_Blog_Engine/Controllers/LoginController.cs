@@ -113,11 +113,11 @@ namespace Mini_Blog_Engine.Controllers
 
                                 if (user.Role == ((int)(UserRole.Admin)).ToString())
                                 {
-                                    RedirectToAction("Index", "Admin");
+                                    return RedirectToAction("Dashboard", "Admin");
                                 }
                                 if (user.Role == ((int)(UserRole.User)).ToString())
                                 {
-                                    RedirectToAction("Index", "Home");
+                                    return RedirectToAction("Dashboard", "User");
                                 }
                             }
                             catch(Exception ex)

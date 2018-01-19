@@ -11,7 +11,12 @@ namespace Mini_Blog_Engine.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View("Index");
+            return RedirectToAction("Dashboard");
+        }
+
+        public ActionResult Dashboard()
+        {
+            return View("Dashboard");
         }
     }
 }
