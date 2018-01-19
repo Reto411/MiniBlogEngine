@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Mini_Blog_Engine.Repository;
+using Mini_Blog_Engine.ViewModels;
+using System;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net;
@@ -27,8 +29,9 @@ namespace Mini_Blog_Engine.Controllers
 
         public ActionResult Index()
         {
-            db.Seed();
-
+            PostRepository postRepo = new PostRepository();
+            ListPostViewModel listPostViewModel = new ListPostViewModel(postRepo.getlistPost_ViewModel());
+            
             return View();
         }
 
