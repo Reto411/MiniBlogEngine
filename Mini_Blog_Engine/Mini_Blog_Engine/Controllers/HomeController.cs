@@ -13,11 +13,14 @@ namespace Mini_Blog_Engine.Controllers
         /*
          * Antwort 
          * 
-         * 1: 
+         * 1: Wir haben den Hash-Algorithmus PBKDF2 ausgewählt weil
+         *    es eines der empfohlenen und am meisten gebrauchten Hash ist.
          * 
-         * 2:
+         * 2: Session-Id theft und Eavesdropping
          * 
-         * 3:
+         * 3: Die Cookies werden mithilfe von Javascript ausgelesen. 
+         *    Als Schutz kann die Webseite die Ip des Cookies und die Ip der Maschiene vergleichen,
+         *    nur wenn die Ip übereinstimmt hat der User Zugriff.
          * 
          */
 
