@@ -15,7 +15,7 @@
         <div class="card">
             <h2>@post.Title</h2>
             <h5>@post.Description</h5>
-            @Html.ActionLink("Detail Ansicht", "Detail", post)
+            @Html.ActionLink("Detail Ansicht", "Detail", new { postId = post.Id })
             <p>@post.Content</p>
         </div>
         }
