@@ -27,7 +27,7 @@ namespace Mini_Blog_Engine.Controllers
          *    nur wenn die Ip übereinstimmt hat der User Zugriff.
          * 
          */
-
+        
         PostRepository postRepo = new PostRepository();
 
         public ActionResult Index()
@@ -37,15 +37,15 @@ namespace Mini_Blog_Engine.Controllers
             return View(listPostViewModel);
         }
 
-        public ActionResult About()
+        public ActionResult Detail()
         {
-            ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Dashboard()
+        public ActionResult About()
         {
+            ViewBag.Message = "Your application description page.";
 
             return View();
         }
