@@ -6,16 +6,14 @@ using System.Web;
 
 namespace Mini_Blog_Engine.Repository
 {
-    public class RepositoryBase
+    public class BaseRepository
     {
         protected DataContext db;
-
-        private bool disposed = false;
-
-        protected RepositoryBase(DataContext db)
+        protected BaseRepository()
         {
-            this.db = db;
+            this.db = new DataContext();
         }
+        private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -29,9 +27,6 @@ namespace Mini_Blog_Engine.Repository
             this.disposed = true;
         }
 
-        /// <summary>
-        /// Database Disposing
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);
