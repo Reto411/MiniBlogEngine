@@ -18,5 +18,9 @@ namespace Mini_Blog_Engine.Repository
         {
             return db.Posts.Where(x => x.Status == PostStatus.Public).ToList();
         }
+        public Post GetPostById(int postId)
+        {
+            return db.Posts.FirstOrDefault(x => x.Id == postId);
+        }
     }
 }

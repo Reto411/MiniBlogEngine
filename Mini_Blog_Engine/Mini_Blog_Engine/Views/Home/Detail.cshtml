@@ -37,6 +37,14 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@foreach (var comment in Model.ListComment)
+{
+    <div class="card">
+        <h2>@comment.User.Username</h2>
+        <h5>@comment.CreatedOn</h5>
+        <p>@comment.Commet</p>
+    </div>
+}

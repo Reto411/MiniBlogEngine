@@ -43,10 +43,11 @@ namespace Mini_Blog_Engine.Controllers
             return View(listPostViewModel);
         }
 
-        public ActionResult Detail(PostViewModel post)
+        public ActionResult Detail(int postId)
         {
-
-            return View(post);
+            Post selectedPost = postRepo.GetPostById(postId);
+            PostViewModel postView = new PostViewModel(selectedPost);
+            return View(postView);
         }
 
         public ActionResult About()
