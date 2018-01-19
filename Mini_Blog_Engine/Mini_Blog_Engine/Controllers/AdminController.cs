@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class AdminController : ControllerWithDB
+    public class AdminController : Controller
     {
         // GET: Admin
         public ActionResult Index()

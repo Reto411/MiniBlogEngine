@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Mini_Blog_Engine.Controllers
 {
-    public class HomeController : ControllerWithDB
+    public class HomeController : Controller
     {
 
         /*
@@ -27,11 +27,19 @@ namespace Mini_Blog_Engine.Controllers
          *    nur wenn die Ip übereinstimmt hat der User Zugriff.
          * 
          */
+        public DataContext db = new DataContext();
 
-        PostRepository postRepo = new PostRepository();
+        private PostRepository postRepo;
+
+        public HomeController()
+        {
+            postRepo = new PostRepository(db);
+        }
+
 
         public ActionResult Index()
         {
+            db.Seed();
             List<Post> postList = postRepo.GetPublishedPostList();
             PublishedPostListViewModel listPostViewModel = new PublishedPostListViewModel(postList);
             return View(listPostViewModel);

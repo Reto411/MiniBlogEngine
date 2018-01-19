@@ -7,6 +7,13 @@ namespace Mini_Blog_Engine.Repository
 {
     public class PostRepository : BaseRepository
     {
+        public PostRepository(DataContext db)
+            : base(db)
+        {
+
+        }
+
+
         public List<Post> GetPublishedPostList()
         {
             return db.Posts.Where(x => x.Status == PostStatus.Public).ToList();

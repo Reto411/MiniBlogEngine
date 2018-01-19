@@ -9,8 +9,17 @@ namespace Mini_Blog_Engine.Controllers
 {
     public class LoginController : Controller
     {
-        private UserRepository userRepository = new UserRepository();
-        private TokenRepository tokenRepoitory = new TokenRepository();
+        public DataContext db = new DataContext();
+
+        private UserRepository userRepository;
+        private TokenRepository tokenRepoitory;
+
+        public LoginController()
+        {
+            userRepository = new UserRepository(db);
+            tokenRepoitory = new TokenRepository(db);
+        }
+
         // GET: Login
         public ActionResult Index()
         {
@@ -29,7 +38,7 @@ namespace Mini_Blog_Engine.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = userRepository.GetUserByUsername(HashHelper.Hash(loginViewModel.Username));
+                User user = userRepository.GetUserByUsername(loginViewModel.Username);
                 if (user != null)
                 {
                     if (HashHelper.CompareStringWithHash(loginViewModel.Password, user.Password))
