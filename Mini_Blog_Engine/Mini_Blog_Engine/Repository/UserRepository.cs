@@ -54,11 +54,18 @@ namespace Mini_Blog_Engine.Repository
         {
             var user = db.Users.Find(userId);
             var session = db.Userlogins.FirstOrDefault(x => x.SessionId == sessionId && x.UserId == userId && x.IP == ip);
-            session.DeletedOn = DateTime.Now;
-
-            var log = new UserLog("Logged Out", user);
-            db.UserLogs.Add(log);
+            if (session != null)
+            {
+                session.DeletedOn = DateTime.Now;
+                var log = new UserLog("Logged Out", user);
+                db.UserLogs.Add(log);
+            }
             db.SaveChanges();
+        }
+
+        public bool IsSessionValid(int userId, string sessionId, string ip)
+        {
+            return db.Userlogins.FirstOrDefault(x => x.SessionId == sessionId && x.UserId == userId && x.IP == ip) != null;
         }
     }
 }

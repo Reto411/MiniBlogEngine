@@ -22,5 +22,10 @@ namespace Mini_Blog_Engine.Repository
         {
             return db.Posts.FirstOrDefault(x => x.Id == postId);
         }
+
+        public List<Post> GetAllPost()
+        {
+            return db.Posts.ToList();
+        }
     }
 }
